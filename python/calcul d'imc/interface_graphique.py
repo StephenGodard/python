@@ -1,6 +1,8 @@
 ###def imc(p,t):
 def imc(p,t):
-    imc=p/(t*t)
+    t=float(t/100)
+    imc=float(p/(t*t))
+    print("imc:",imc)
     if imc<16:
         print("anorexie contactez au plus vite votre médecin")
     elif imc>16 and imc<18.5:
@@ -19,27 +21,46 @@ def imc(p,t):
 #!/usr/bin/env python
 #-*- coding:utf-8-*-
 # ----------Fenetre ----------------
-from decimal import Decimal
-from tkinter import*
-fenetre=Tk()
-label=Label(fenetre,text="Bienvenue dans le calculateur d'imc ! ")
 
-label.pack()
-#-----------Boutton Poids
-value = StringVar()
-value.set("")
-masse= Entry(fenetre, textvariable = value, width=4)
-masse.pack(side=LEFT, padx=5, pady=5)
-#-----------Boutton Taille
-value1 = StringVar()
-value1.set("")
-taille= Entry(fenetre, textvariable = value1, width=4)
-taille.pack(side=RIGHT, padx=10, pady=5)
+from tkinter import *
+def correct(v,inp):
 
-#---------Conversion
-t=format(masse, '.15g')
-m= format(masse, '.15g')
-bouton=Button(fenetre,text="calculez votre imc",command=imc(m, t))
-bouton.pack()
+    if inp.isdigit():
+
+        return True
+    elif inp is "":
+
+        return True
+
+    else:
+
+        return False
+
+
+def buttonClick():
+    float_masse = int(masse.get())
+    float_taille = int(taille.get())
+    print(float_masse)
+    print(float_taille)
+    imc(float_masse,float_taille)
+
+fenetre = Tk()
+fenetre.configure(width="400",height="200")
+
+masse = Entry(fenetre)
+masse.place(x=50,y=50)
+labelMasse=Label(fenetre,text="poids en kg:")
+labelMasse.place(x=50,y=25)
+taille = Entry(fenetre)
+taille.place(x=200,y=50)
+labelTaille=Label(fenetre,text="taille en cm:")
+labelTaille.place(x=200,y=25)
+reg=fenetre.register(correct)
+masse.config(validate="key",validatecommand=(reg,'%v','%P'))
+taille.config(validate="key",validatecommand=(reg,'%v','%P'))
+submitButton=Button(fenetre,text="submit",command=buttonClick)
+submitButton.place(x=150,y=75)
+
+
+
 fenetre.mainloop()
-
