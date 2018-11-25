@@ -47,11 +47,16 @@ while True:
                 break
     print("adress mail incorrect !")
 
-twice=doublons(Adresslist)
+
 print("vérification du nom de domaine")
 domain=Adresslist.split('@')
-os.exec1("ping",domain[1])
-print(domain[1])
+os.system('ping -c 2'+ ' '+domain[1]+'>pingtest.txt')
+if os.path.getsize("pingtest.txt")==0:
+    print("KO")
+else:
+    print("OK")
+
+#print(domain[1])
 
 print("vous avez rentrer 1 adresse:\n ping de l'adresse veuillez patienter...")
 
