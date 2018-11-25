@@ -5,47 +5,55 @@ def ecrire(Adresslist):
     Adress.write("\n")
     Adress.close()
 def lire():
-    Adress = open("path", "r")
+    Adress = open("listeAdress.csv", "r")
     print(Adress.read())
     Adress.close()
-def doublons():
-    f = open('listeAdress.csv')
-    li = []
-    while 1:
-        ln = f.readline().split()
-        if ln:
-            li.append(ln)
-        else:
-            break
-    f.close()
-    return li
+
+def doublons(Adresslist):
+    Adress = open("listeAdress.csv", "r")
+    for ligne in Adress:
+          if Adresslist in ligne:
+              Adress.close()
+              return True
+    else:
+        Adress.close()
+        return False
+import os
+compteur = 1
 car="@"
 com=".com"
 fr=".fr"
-import os
-hostname = "googl" #example
-response = os.system("ping -c 1 " + hostname)
 
-#and then check the response...
-if response == 0:
-  print hostname, 'is up!'
-else:
-  print hostname, 'is down!'
+
 
 while True:
     Adresslist=input("veuillez entrer une adresse mail valide:\n")
     if car in Adresslist:
         if com in Adresslist:
-            break
+            twice=doublons(Adresslist)
+            if twice==True:
+                print("Adresse déjà sauvegarder")
+            else:
+                print("adresse correct !")
+                break
+
+
         elif fr in Adresslist:
-            break
+            twice = doublons(Adresslist)
+            if twice == True:
+                print("Adresse déjà sauvegarder")
+            else:
+                print("adresse correct !")
+                break
     print("adress mail incorrect !")
 
-ecrire(Adresslist)
-print("vous avez rentrer 1 adresse:\n")
-liste=[]
-liste=doublons()
+twice=doublons(Adresslist)
+print("vérification du nom de domaine")
+domain=Adresslist.split('@')
+os.exec1("ping",domain[1])
+print(domain[1])
+
+print("vous avez rentrer 1 adresse:\n ping de l'adresse veuillez patienter...")
 
 
-print(liste)
 
