@@ -8,7 +8,7 @@ def lire():
     Adress = open("listeAdress.csv", "r")
     print(Adress.read())
     Adress.close()
-
+#fonction qui vérifie la présence de doublons
 def doublons(Adresslist):
     Adress = open("listeAdress.csv", "r")
     for ligne in Adress:
@@ -18,14 +18,22 @@ def doublons(Adresslist):
     else:
         Adress.close()
         return False
+def test_ping(Adresslist):
+    #fonction permettant de tester les nom de domaines
+    domain = Adresslist.split('@')
+    print("ping de l'adresse veuillez patienter...")
+    os.system('ping -c 2' + ' ' + domain[1] + '>pingtest.txt')
+    if os.path.getsize("pingtest.txt") == 0:
+        print("KO")
+        return 1
+    else:
+        print("OK")
+        return 0
+#-------------------Début du programme-------------------#
 import os
-compteur = 1
 car="@"
 com=".com"
 fr=".fr"
-
-
-
 while True:
     Adresslist=input("veuillez entrer une adresse mail valide:\n")
     if car in Adresslist:
@@ -47,18 +55,11 @@ while True:
                 break
     print("adress mail incorrect !")
 
-
-print("vérification du nom de domaine")
-domain=Adresslist.split('@')
-os.system('ping -c 2'+ ' '+domain[1]+'>pingtest.txt')
-if os.path.getsize("pingtest.txt")==0:
-    print("KO")
-else:
-    print("OK")
-
-#print(domain[1])
-
-print("vous avez rentrer 1 adresse:\n ping de l'adresse veuillez patienter...")
-
-
+ping=test_ping(Adresslist)
+if ping==1:
+    print("adresse mail nom pingable")
+elif ping==0:
+    print("adresse mail pingable ajout à la mailing list")
+    ecrire(Adresslist)
+    print("vous avez rentrer 1 adresse:",Adresslist)
 
